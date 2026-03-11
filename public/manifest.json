@@ -1,0 +1,64 @@
+{
+  "name": "Holix AI - 本地优先的 AI 工作台",
+  "short_name": "Holix AI",
+  "description": "一个基于 Electron 的跨平台桌面 AI 应用，统一管理多个模型供应商，通过 Skills 机制让 AI 从聊天升级为可执行任务的智能助手",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon_16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities", "developer tools"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "下载应用",
+      "short_name": "下载",
+      "description": "下载 Holix AI 桌面应用",
+      "url": "/download",
+      "icons": [
+        {
+          "src": "/icon_256.png",
+          "sizes": "256x256"
+        }
+      ]
+    }
+  ]
+}

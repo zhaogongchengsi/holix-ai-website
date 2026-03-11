@@ -107,37 +107,58 @@ export function FeaturesSection() {
               <motion.div
                 key={feature.title}
                 variants={itemVariants}
-                whileHover={{ 
-                  scale: 1.05,
-                  transition: { duration: 0.2 }
-                }}
-                className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:shadow-primary/10"
+                className="group relative"
               >
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 -z-10 bg-linear-to-br from-primary/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                
+                {/* Rotating gradient border glow */}
                 <motion.div
-                  className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20"
-                  whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Icon className="h-6 w-6 text-primary transition-transform group-hover:scale-110" />
-                </motion.div>
-                
-                <h3 className="mb-2 text-xl font-semibold transition-colors group-hover:text-primary">
-                  {feature.title}
-                </h3>
-                <p className="text-muted-foreground">
-                  {feature.description}
-                </p>
-                
-                {/* Animated corner accent */}
-                <motion.div
-                  className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/5 blur-2xl"
-                  initial={{ scale: 0, opacity: 0 }}
-                  whileHover={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.3 }}
+                  className="absolute -inset-0.5 rounded-lg bg-linear-to-r from-primary via-secondary to-primary opacity-0 blur-sm transition-opacity duration-500 group-hover:opacity-75"
+                  animate={{
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  style={{
+                    backgroundSize: "200% 200%"
+                  }}
                 />
+                
+                {/* Card content */}
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { duration: 0.2 }
+                  }}
+                  className="relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:shadow-primary/10"
+                >
+                  {/* Gradient overlay on hover */}
+                  <div className="absolute inset-0 -z-10 bg-linear-to-br from-primary/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                  
+                  <motion.div
+                    className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20"
+                    whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Icon className="h-6 w-6 text-primary transition-transform group-hover:scale-110" />
+                  </motion.div>
+                  
+                  <h3 className="mb-2 text-xl font-semibold transition-colors group-hover:text-primary">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground">
+                    {feature.description}
+                  </p>
+                  
+                  {/* Animated corner accent */}
+                  <motion.div
+                    className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/5 blur-2xl"
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileHover={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.div>
               </motion.div>
             )
           })}

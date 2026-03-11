@@ -1,8 +1,9 @@
 "use client"
 
-import { Download, ArrowRight, Github } from "lucide-react"
+import { Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
+import { DownloadButton } from "@/components/download-button"
 
 export function CTASection() {
   return (
@@ -32,11 +33,11 @@ export function CTASection() {
           className="flex flex-wrap items-center justify-center gap-4"
         >
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button size="lg" className="gap-2">
-              <Download className="h-5 w-5" />
-              下载最新版本
-              <ArrowRight className="h-4 w-4" />
-            </Button>
+            <DownloadButton 
+              size="lg" 
+              className="gap-2"
+              showPlatform={false}
+            />
           </motion.div>
           
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>

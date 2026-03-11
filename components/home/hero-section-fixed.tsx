@@ -17,13 +17,14 @@ export function HeroSection() {
   }>>([])
 
   useEffect(() => {
-    const newParticles = Array.from({ length: 20 }, () => ({
-      left: Math.random() * 100,
-      top: Math.random() * 100,
-      duration: Math.random() * 3 + 2,
-      delay: Math.random() * 2,
-    }))
-    setParticles(newParticles)
+    setParticles(
+      Array.from({ length: 20 }, () => ({
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        duration: Math.random() * 3 + 2,
+        delay: Math.random() * 2,
+      }))
+    )
   }, [])
 
   return (

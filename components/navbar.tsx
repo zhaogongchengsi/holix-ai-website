@@ -1,13 +1,22 @@
 import { Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
+import Link from "next/link"
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <nav className="container flex h-16 items-center justify-between px-6">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
+          <Image 
+            src="/icon_64.png" 
+            alt="Holix AI Logo" 
+            width={32} 
+            height={32}
+            className="h-8 w-8"
+          />
           <span className="text-xl font-bold">Holix AI</span>
-        </div>
+        </Link>
         
         <div className="hidden items-center gap-8 md:flex">
           <a href="#features" className="text-sm font-medium transition-colors hover:text-primary">
