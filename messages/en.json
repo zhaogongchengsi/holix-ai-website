@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "whyChoose": "Why Choose",
+    "download": "Download",
+    "backHome": "Back to Home"
+  },
+  "hero": {
+    "title": "Holix AI",
+    "subtitle": "Unified AI Workspace",
+    "description": "A cross-platform desktop AI application based on Electron, unified management of multiple model providers, upgrading AI from chat to intelligent assistant that can execute tasks through Skills mechanism",
+    "downloadButton": "Download for {platform}",
+    "viewSource": "View Source"
+  },
+  "features": {
+    "title": "Core Features",
+    "subtitle": "Powerful and Flexible AI Workspace",
+    "multiProvider": {
+      "title": "Multi-Provider Support",
+      "description": "Unified management of APIs from OpenAI, Anthropic, Gemini and more"
+    },
+    "skills": {
+      "title": "Skills Mechanism",
+      "description": "Let AI do more than chat - execute file operations, network requests and real tasks"
+    },
+    "crossPlatform": {
+      "title": "Cross-Platform",
+      "description": "Based on Electron, runs perfectly on Windows, macOS and Linux"
+    },
+    "openSource": {
+      "title": "Open Source & Free",
+      "description": "MIT licensed, fully open source, customizable and self-hostable"
+    },
+    "privacy": {
+      "title": "Privacy First",
+      "description": "All data stored locally, API keys securely encrypted"
+    },
+    "modern": {
+      "title": "Modern UI",
+      "description": "Clean and elegant UI design with smooth user experience"
+    }
+  },
+  "whyChoose": {
+    "title": "Why Choose Holix AI",
+    "unified": {
+      "title": "Unified Management",
+      "description": "Manage all AI providers in one app, no need to switch"
+    },
+    "flexible": {
+      "title": "Flexible Configuration",
+      "description": "Support custom API endpoints and parameter configuration"
+    },
+    "efficient": {
+      "title": "Efficient Collaboration",
+      "description": "Make AI truly your work assistant through Skills"
+    },
+    "secure": {
+      "title": "Secure & Reliable",
+      "description": "Local storage, data fully under your control"
+    },
+    "community": {
+      "title": "Active Community",
+      "description": "Continuously updated, contributions and feedback welcome"
+    }
+  },
+  "cta": {
+    "title": "Get Started Now",
+    "subtitle": "Open Source, Free, Self-Hostable AI Workspace",
+    "downloadButton": "Download App",
+    "githubButton": "GitHub Repository"
+  },
+  "download": {
+    "title": "Download Holix AI",
+    "subtitle": "Choose the version for your operating system and start using the AI workspace",
+    "detectedOS": "Detected your operating system: {os}",
+    "recommended": "Recommended",
+    "downloadButton": "Download {platform}",
+    "version": "Version {version}",
+    "fileSize": "File Size: {size}",
+    "alternativeDownloads": "Alternative Downloads",
+    "allVersions": "View All Versions",
+    "githubRepo": "Visit GitHub Repository",
+    "systemRequirements": "System Requirements",
+    "platforms": {
+      "windows": {
+        "name": "Windows",
+        "description": "Windows 10/11 (64-bit)",
+        "format": ".exe"
+      },
+      "mac": {
+        "name": "macOS",
+        "description": "macOS 10.15+ (Apple Silicon)",
+        "format": ".dmg"
+      },
+      "linux": {
+        "name": "Linux",
+        "description": "Coming Soon",
+        "format": "Stay Tuned"
+      }
+    }
+  },
+  "footer": {
+    "brand": "Holix AI",
+    "description": "Unified AI Workspace",
+    "copyright": "© {year} Holix AI. Open source project under MIT License"
+  }
+}

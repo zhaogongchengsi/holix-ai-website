@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "首页",
+    "features": "核心功能",
+    "whyChoose": "为什么选择",
+    "download": "下载",
+    "backHome": "返回首页"
+  },
+  "hero": {
+    "title": "Holix AI",
+    "subtitle": "统一 AI 工作台",
+    "description": "一个基于 Electron 的跨平台桌面 AI 应用，统一管理多个模型供应商，通过 Skills 机制让 AI 从聊天升级为可执行任务的智能助手",
+    "downloadButton": "下载 {platform} 版本",
+    "viewSource": "查看源码"
+  },
+  "features": {
+    "title": "核心功能",
+    "subtitle": "强大而灵活的 AI 工作台",
+    "multiProvider": {
+      "title": "多供应商支持",
+      "description": "统一管理 OpenAI、Anthropic、Gemini 等多个供应商的 API"
+    },
+    "skills": {
+      "title": "Skills 机制",
+      "description": "让 AI 不止于聊天，可以执行文件操作、网络请求等实际任务"
+    },
+    "crossPlatform": {
+      "title": "跨平台支持",
+      "description": "基于 Electron，完美运行于 Windows、macOS 和 Linux"
+    },
+    "openSource": {
+      "title": "开源免费",
+      "description": "MIT 协议，完全开源，可自由定制和部署"
+    },
+    "privacy": {
+      "title": "隐私优先",
+      "description": "所有数据本地存储，API Key 安全加密保护"
+    },
+    "modern": {
+      "title": "现代化界面",
+      "description": "简洁优雅的 UI 设计，流畅的用户体验"
+    }
+  },
+  "whyChoose": {
+    "title": "为什么选择 Holix AI",
+    "unified": {
+      "title": "统一管理",
+      "description": "一个应用管理所有 AI 供应商，无需频繁切换"
+    },
+    "flexible": {
+      "title": "灵活配置",
+      "description": "支持自定义 API 端点和参数配置"
+    },
+    "efficient": {
+      "title": "高效协作",
+      "description": "通过 Skills 让 AI 真正成为你的工作助手"
+    },
+    "secure": {
+      "title": "安全可靠",
+      "description": "本地存储，数据完全由你掌控"
+    },
+    "community": {
+      "title": "活跃社区",
+      "description": "持续更新，欢迎贡献和反馈"
+    }
+  },
+  "cta": {
+    "title": "立即开始使用",
+    "subtitle": "开源、免费、可自部署的 AI 工作台",
+    "downloadButton": "下载应用",
+    "githubButton": "GitHub 仓库"
+  },
+  "download": {
+    "title": "下载 Holix AI",
+    "subtitle": "选择适合你操作系统的版本，开始使用 AI 工作台",
+    "detectedOS": "检测到您的操作系统：{os}",
+    "recommended": "推荐",
+    "downloadButton": "下载 {platform}",
+    "version": "版本 {version}",
+    "fileSize": "文件大小: {size}",
+    "alternativeDownloads": "其他下载方式",
+    "allVersions": "查看所有版本",
+    "githubRepo": "访问 GitHub 仓库",
+    "systemRequirements": "系统要求",
+    "platforms": {
+      "windows": {
+        "name": "Windows",
+        "description": "Windows 10/11 (64位)",
+        "format": ".exe"
+      },
+      "mac": {
+        "name": "macOS",
+        "description": "macOS 10.15+ (Apple Silicon)",
+        "format": ".dmg"
+      },
+      "linux": {
+        "name": "Linux",
+        "description": "即将推出",
+        "format": "敬请期待"
+      }
+    }
+  },
+  "footer": {
+    "brand": "Holix AI",
+    "description": "统一 AI 工作台",
+    "copyright": "© {year} Holix AI. 开源项目，采用 MIT 协议"
+  }
+}

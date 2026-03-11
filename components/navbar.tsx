@@ -1,9 +1,15 @@
+"use client"
+
 import { Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { LanguageSwitcher } from "@/components/language-switcher"
+import { useTranslations } from 'next-intl'
+import { Link } from '@/navigation'
 import Image from "next/image"
-import Link from "next/link"
 
 export function Navbar() {
+  const t = useTranslations('nav')
+  
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <nav className="container flex h-16 items-center justify-between px-6">
@@ -20,25 +26,18 @@ export function Navbar() {
         
         <div className="hidden items-center gap-8 md:flex">
           <a href="#features" className="text-sm font-medium transition-colors hover:text-primary">
-            核心功能
+            {t('features')}
           </a>
           <a href="#why-choose" className="text-sm font-medium transition-colors hover:text-primary">
-            为什么选择
+            {t('whyChoose')}
           </a>
-          <a href="#quick-start" className="text-sm font-medium transition-colors hover:text-primary">
-            快速开始
-          </a>
-          <a 
-            href="https://github.com/zhaogongchengsi/holix-ai/blob/main/docs/SKILLS.md" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-sm font-medium transition-colors hover:text-primary"
-          >
-            文档
-          </a>
+          <Link href="/download" className="text-sm font-medium transition-colors hover:text-primary">
+            {t('download')}
+          </Link>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           <a 
             href="https://github.com/zhaogongchengsi/holix-ai" 
             target="_blank" 
@@ -49,7 +48,9 @@ export function Navbar() {
               <span className="hidden sm:inline">GitHub</span>
             </Button>
           </a>
-          <Button size="sm">下载</Button>
+          <Link href="/download">
+            <Button size="sm">{t('download')}</Button>
+          </Link>
         </div>
       </nav>
     </header>
