@@ -4,8 +4,13 @@ import { Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { DownloadButton } from "@/components/download-button"
+import { type DownloadInfo } from "@/lib/download-utils"
 
-export function CTASection() {
+interface CTASectionProps {
+  downloadInfo: DownloadInfo | null
+}
+
+export function CTASection({ downloadInfo }: CTASectionProps) {
   return (
     <section id="quick-start" className="relative overflow-hidden px-6 py-24 lg:px-8">
       {/* Subtle background gradient */}
@@ -37,6 +42,7 @@ export function CTASection() {
               size="lg" 
               className="gap-2"
               showPlatform={false}
+              downloadInfo={downloadInfo}
             />
           </motion.div>
           

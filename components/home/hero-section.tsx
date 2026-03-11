@@ -5,9 +5,14 @@ import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import { DownloadButton } from "@/components/download-button"
+import { type DownloadInfo } from "@/lib/download-utils"
 import Image from "next/image"
 
-export function HeroSection() {
+interface HeroSectionProps {
+  downloadInfo: DownloadInfo | null
+}
+
+export function HeroSection({ downloadInfo }: HeroSectionProps) {
   // Generate particle positions only on client side to avoid hydration mismatch
   const [particles, setParticles] = useState<Array<{
     left: number
@@ -181,6 +186,7 @@ export function HeroSection() {
               size="lg" 
               className="transition-transform hover:scale-105"
               showPlatform={true}
+              downloadInfo={downloadInfo}
             />
             <a 
               href="https://github.com/zhaogongchengsi/holix-ai" 

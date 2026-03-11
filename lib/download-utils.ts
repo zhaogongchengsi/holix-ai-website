@@ -37,11 +37,15 @@ export function detectOS(): 'windows' | 'mac' | 'mac-arm' | 'linux' | 'unknown' 
 }
 
 /**
- * 从服务端 API 获取最新的下载信息
+ * 服务端获取最新的下载信息（用于 Server Components）
  */
-export async function fetchDownloadInfo(): Promise<DownloadInfo | null> {
+export async function getDownloadInfo(): Promise<DownloadInfo | null> {
   try {
-    const response = await fetch('/api/download-info')
+    // 在服务端直接调用 API，使用绝对 URL
+    const baseURL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+    const response = await fetch(`${baseURL}/api/download-info`, {
+      next: { revalidate: 300 } // 缓存 5 分钟
+    })
     if (!response.ok) return null
     return await response.json()
   } catch (error) {
