@@ -1,7 +1,23 @@
+// API 返回的下载信息类型
+export interface DownloadInfo {
+  windows: {
+    version: string
+    url: string
+    size: number
+    fileName: string
+  } | null
+  mac: {
+    version: string
+    url: string
+    size: number
+    fileName: string
+  } | null
+}
+
 /**
- * 检测当前操作系统并返回对应的下载链接
+ * 检测当前操作系统
  */
-export function detectOS(): 'windows' | 'mac' | 'linux' | 'unknown' {
+export function detectOS(): 'windows' | 'mac' | 'mac-arm' | 'linux' | 'unknown' {
   if (typeof window === 'undefined') return 'unknown'
   
   const userAgent = window.navigator.userAgent.toLowerCase()
@@ -11,7 +27,7 @@ export function detectOS(): 'windows' | 'mac' | 'linux' | 'unknown' {
     return 'windows'
   }
   if (platform.includes('mac') || userAgent.includes('mac')) {
-    return 'mac'
+    return 'mac-arm'
   }
   if (platform.includes('linux') || userAgent.includes('linux')) {
     return 'linux'
@@ -21,38 +37,69 @@ export function detectOS(): 'windows' | 'mac' | 'linux' | 'unknown' {
 }
 
 /**
- * 获取对应系统的下载链接
+ * 从服务端 API 获取最新的下载信息
  */
-export function getDownloadLink(os?: 'windows' | 'mac' | 'linux' | 'unknown'): string {
-  const detectedOS = os || detectOS()
-  const baseURL = 'https://github.com/zhaogongchengsi/holix-ai/releases/latest/download'
-  
-  switch (detectedOS) {
-    case 'windows':
-      return `${baseURL}/Holix-AI-Setup.exe`
-    case 'mac':
-      return `${baseURL}/Holix-AI.dmg`
-    case 'linux':
-      return `${baseURL}/Holix-AI.AppImage`
-    default:
-      return 'https://github.com/zhaogongchengsi/holix-ai/releases'
+export async function fetchDownloadInfo(): Promise<DownloadInfo | null> {
+  try {
+    const response = await fetch('/api/download-info')
+    if (!response.ok) return null
+    return await response.json()
+  } catch (error) {
+    console.error('获取下载信息失败:', error)
+    return null
   }
+}
+
+/**
+ * 根据操作系统和下载信息获取下载链接
+ */
+export function getDownloadLink(downloadInfo: DownloadInfo | null, os?: 'windows' | 'mac' | 'mac-arm' | 'linux' | 'unknown'): string {
+  const detectedOS = os || detectOS()
+  const fallbackURL = 'https://github.com/zhaogongchengsi/holix-ai/releases'
+  
+  // 如果有动态下载信息，优先使用
+  if (downloadInfo) {
+    switch (detectedOS) {
+      case 'windows':
+        return downloadInfo.windows?.url || fallbackURL
+      case 'mac':
+      case 'mac-arm':
+        return downloadInfo.mac?.url || fallbackURL
+      case 'linux':
+        return fallbackURL
+      default:
+        return fallbackURL
+    }
+  }
+  
+  // 降级到 fallback
+  return fallbackURL
 }
 
 /**
  * 获取系统显示名称
  */
-export function getOSDisplayName(os: 'windows' | 'mac' | 'linux' | 'unknown'): string {
+export function getOSDisplayName(os: 'windows' | 'mac' | 'mac-arm' | 'linux' | 'unknown'): string {
   switch (os) {
     case 'windows':
       return 'Windows'
     case 'mac':
+    case 'mac-arm':
       return 'macOS'
     case 'linux':
       return 'Linux'
     default:
       return '所有平台'
   }
+}
+
+/**
+ * 格式化文件大小
+ */
+export function formatFileSize(bytes: number): string {
+  if (bytes === 0) return '未知大小'
+  const mb = bytes / (1024 * 1024)
+  return `${mb.toFixed(0)} MB`
 }
 
 /**
@@ -65,33 +112,41 @@ export interface DownloadOption {
   link: string
   fileFormat: string
   description: string
+  version?: string
+  size?: string
 }
 
-export function getAllDownloadOptions(): DownloadOption[] {
+export function getAllDownloadOptions(downloadInfo: DownloadInfo | null): DownloadOption[] {
+  const fallbackURL = 'https://github.com/zhaogongchengsi/holix-ai/releases'
+  
   return [
     {
       os: 'windows',
       name: 'Windows',
       icon: '🪟',
-      link: getDownloadLink('windows'),
+      link: downloadInfo?.windows?.url || fallbackURL,
       fileFormat: '.exe',
-      description: 'Windows 10/11 (64位)'
+      description: 'Windows 10/11 (64位)',
+      version: downloadInfo?.windows?.version,
+      size: downloadInfo?.windows?.size ? formatFileSize(downloadInfo.windows.size) : undefined
     },
     {
       os: 'mac',
       name: 'macOS',
       icon: '🍎',
-      link: getDownloadLink('mac'),
+      link: downloadInfo?.mac?.url || fallbackURL,
       fileFormat: '.dmg',
-      description: 'macOS 10.15+ (Intel & Apple Silicon)'
+      description: 'macOS 10.15+ (Apple Silicon)',
+      version: downloadInfo?.mac?.version,
+      size: downloadInfo?.mac?.size ? formatFileSize(downloadInfo.mac.size) : undefined
     },
     {
       os: 'linux',
       name: 'Linux',
       icon: '🐧',
-      link: getDownloadLink('linux'),
-      fileFormat: '.AppImage',
-      description: 'Ubuntu, Debian, Fedora, Arch'
+      link: fallbackURL,
+      fileFormat: '敬请期待',
+      description: '即将推出'
     }
   ]
 }

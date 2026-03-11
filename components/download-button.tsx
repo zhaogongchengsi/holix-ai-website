@@ -4,6 +4,7 @@ import { Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { detectOS, getDownloadLink, getOSDisplayName } from "@/lib/download-utils"
 import { useSyncExternalStore } from "react"
+import { useDownloadInfo } from "@/hooks/use-download-info"
 import Link from "next/link"
 
 interface DownloadButtonProps {
@@ -26,17 +27,18 @@ function getServerSnapshot() {
 
 export function DownloadButton({ size = "lg", className = "", showPlatform = true }: DownloadButtonProps) {
   const os = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
+  const { downloadInfo, loading } = useDownloadInfo()
 
-  const downloadLink = getDownloadLink(os)
+  const downloadLink = getDownloadLink(downloadInfo, os)
   const osName = getOSDisplayName(os)
 
-  // 如果无法识别系统，跳转到下载页面
-  if (os === 'unknown') {
+  // 如果无法识别系统或正在加载，跳转到下载页面
+  if (os === 'unknown' || loading) {
     return (
       <Link href="/download">
-        <Button size={size} className={`gap-2 ${className}`}>
+        <Button size={size} className={`gap-2 ${className}`} disabled={loading}>
           <Download className="h-5 w-5" />
-          下载应用
+          {loading ? '加载中...' : '下载应用'}
         </Button>
       </Link>
     )

@@ -3,6 +3,7 @@
 import { Download, Github, ExternalLink, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { getAllDownloadOptions, detectOS } from "@/lib/download-utils"
+import { useDownloadInfo } from "@/hooks/use-download-info"
 import { motion } from "framer-motion"
 import { useSyncExternalStore } from "react"
 import Link from "next/link"
@@ -21,9 +22,10 @@ function getServerSnapshot() {
 
 export default function DownloadPage() {
   const currentOS = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
+  const { downloadInfo, loading } = useDownloadInfo()
   const mounted = currentOS !== 'unknown'
   
-  const downloadOptions = getAllDownloadOptions()
+  const downloadOptions = getAllDownloadOptions(downloadInfo)
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -118,11 +120,22 @@ export default function DownloadPage() {
                       <div className="mb-4 text-center">
                         <div className="mb-2 text-5xl">{option.icon}</div>
                         <h3 className="text-2xl font-bold">{option.name}</h3>
+                        {option.version && (
+                          <p className="mt-1 text-xs text-muted-foreground">
+                            版本 {option.version}
+                          </p>
+                        )}
                       </div>
 
                       <div className="mb-6 space-y-2 text-center text-sm text-muted-foreground">
                         <p>{option.description}</p>
                         <p className="font-mono text-xs">{option.fileFormat}</p>
+                        {option.size && (
+                          <p className="text-xs">文件大小: {option.size}</p>
+                        )}
+                        {loading && !option.version && option.os !== 'linux' && (
+                          <p className="text-xs italic">正在获取版本信息...</p>
+                        )}
                       </div>
 
                       <a href={option.link} download className="block">
@@ -130,9 +143,10 @@ export default function DownloadPage() {
                           className="w-full gap-2" 
                           size="lg"
                           variant={isRecommended ? "default" : "outline"}
+                          disabled={loading && option.os !== 'linux'}
                         >
                           <Download className="h-5 w-5" />
-                          下载 {option.name}
+                          {loading && option.os !== 'linux' ? '加载中...' : `下载 ${option.name}`}
                         </Button>
                       </a>
                     </div>
