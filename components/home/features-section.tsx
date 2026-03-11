@@ -1,3 +1,5 @@
+"use client"
+
 import { 
   Sparkles, 
   Database, 
@@ -7,6 +9,9 @@ import {
   Code2,
   LucideIcon
 } from "lucide-react"
+import { motion } from "framer-motion"
+import { useInView } from "framer-motion"
+import { useRef } from "react"
 
 interface Feature {
   icon: LucideIcon
@@ -47,38 +52,96 @@ const features: Feature[] = [
   }
 ]
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5
+    }
+  }
+}
+
 export function FeaturesSection() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+
   return (
     <section id="features" className="px-6 py-24 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-16 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+          className="mb-16 text-center"
+        >
           <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
             核心功能
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
             为生产力打造的 AI 客户端基础设施
           </p>
-        </div>
+        </motion.div>
         
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          ref={ref}
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+        >
           {features.map((feature) => {
             const Icon = feature.icon
             return (
-              <div 
+              <motion.div
                 key={feature.title}
-                className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg"
+                variants={itemVariants}
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { duration: 0.2 }
+                }}
+                className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:shadow-primary/10"
               >
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                  <Icon className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="mb-2 text-xl font-semibold">{feature.title}</h3>
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 -z-10 bg-linear-to-br from-primary/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                
+                <motion.div
+                  className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20"
+                  whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Icon className="h-6 w-6 text-primary transition-transform group-hover:scale-110" />
+                </motion.div>
+                
+                <h3 className="mb-2 text-xl font-semibold transition-colors group-hover:text-primary">
+                  {feature.title}
+                </h3>
                 <p className="text-muted-foreground">
                   {feature.description}
                 </p>
-              </div>
+                
+                {/* Animated corner accent */}
+                <motion.div
+                  className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/5 blur-2xl"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileHover={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.div>
             )
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
