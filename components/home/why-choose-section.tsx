@@ -60,32 +60,25 @@ export function WhyChooseSection() {
               variants={itemVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              whileHover={{ scale: 1.02, x: 10 }}
-              className="group flex gap-4 rounded-lg border bg-card/50 p-6 backdrop-blur-sm transition-all hover:bg-card hover:shadow-lg hover:shadow-primary/5"
+              className="group relative flex gap-6 overflow-hidden rounded-2xl border bg-background/50 p-6 transition-colors hover:bg-muted/50 sm:p-8"
             >
-              <motion.div
-                whileHover={{ scale: 1.2, rotate: 360 }}
-                transition={{ duration: 0.3 }}
-              >
-                <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-primary" />
-              </motion.div>
+              {/* Subtle tech border gradient on hover */}
+              <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary/50" />
+              <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary/20" />
+              
+              {/* Minimalist Icon wrapper */}
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border bg-background/50 shadow-sm transition-colors group-hover:border-primary/50 group-hover:bg-primary/5">
+                <CheckCircle2 className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
+              </div>
+              
               <div className="flex-1">
-                <h3 className="mb-1 font-semibold transition-colors group-hover:text-primary">
+                <h3 className="mb-2 text-lg font-medium tracking-tight text-foreground transition-colors group-hover:text-primary">
                   {t(`items.${advantage.key}.title`)}
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-sm leading-relaxed text-muted-foreground">
                   {t(`items.${advantage.key}.description`)}
                 </p>
               </div>
-              
-              {/* Animated accent line */}
-              <motion.div
-                className="absolute left-0 top-0 h-full w-1 bg-primary"
-                initial={{ scaleY: 0 }}
-                whileHover={{ scaleY: 1 }}
-                transition={{ duration: 0.2 }}
-                style={{ originY: 0 }}
-              />
             </motion.div>
           ))}
         </div>

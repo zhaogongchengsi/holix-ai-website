@@ -3,6 +3,7 @@
 import { Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LanguageSwitcher } from "@/components/language-switcher"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { useTranslations } from 'next-intl'
 import { Link } from '@/navigation'
 import Image from "next/image"
@@ -37,6 +38,7 @@ export function Navbar() {
         </div>
         
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <LanguageSwitcher />
           <a 
             href="https://github.com/zhaogongchengsi/holix-ai" 
