@@ -26,14 +26,17 @@ export function Navbar() {
         </Link>
         
         <div className="hidden items-center gap-8 md:flex">
-          <a href="#features" className="text-sm font-medium transition-colors hover:text-primary">
+          <a href="/#features" className="text-sm font-medium transition-colors hover:text-primary">
             {t('features')}
           </a>
-          <a href="#why-choose" className="text-sm font-medium transition-colors hover:text-primary">
+          <a href="/#why-choose" className="text-sm font-medium transition-colors hover:text-primary">
             {t('whyChoose')}
           </a>
           <Link href="/download" className="text-sm font-medium transition-colors hover:text-primary">
             {t('download')}
+          </Link>
+          <Link href="/changelog" className="text-sm font-medium transition-colors hover:text-primary">
+            {t('changelog')}
           </Link>
         </div>
         
