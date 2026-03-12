@@ -76,7 +76,7 @@ export function FeaturesSection() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
           {featureIcons.map((feature) => {
             const Icon = feature.icon
@@ -84,58 +84,23 @@ export function FeaturesSection() {
               <motion.div
                 key={feature.key}
                 variants={itemVariants}
-                className="group relative"
+                className="group relative overflow-hidden rounded-2xl border bg-background/50 p-8 transition-colors hover:bg-muted/50"
               >
-                {/* Rotating gradient border glow */}
-                <motion.div
-                  className="absolute -inset-0.5 rounded-lg bg-linear-to-r from-primary via-secondary to-primary opacity-0 blur-sm transition-opacity duration-500 group-hover:opacity-75"
-                  animate={{
-                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                  style={{
-                    backgroundSize: "200% 200%"
-                  }}
-                />
+                {/* Subtle tech border gradient on hover */}
+                <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary/50" />
+                <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary/20" />
                 
-                {/* Card content */}
-                <motion.div
-                  whileHover={{ 
-                    scale: 1.05,
-                    transition: { duration: 0.2 }
-                  }}
-                  className="relative overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg hover:shadow-primary/10"
-                >
-                  {/* Gradient overlay on hover */}
-                  <div className="absolute inset-0 -z-10 bg-linear-to-br from-primary/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                  
-                  <motion.div
-                    className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20"
-                    whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Icon className="h-6 w-6 text-primary transition-transform group-hover:scale-110" />
-                  </motion.div>
-                  
-                  <h3 className="mb-2 text-xl font-semibold transition-colors group-hover:text-primary">
-                    {t(`items.${feature.key}.title`)}
-                  </h3>
-                  <p className="text-muted-foreground">
-                    {t(`items.${feature.key}.description`)}
-                  </p>
-                  
-                  {/* Animated corner accent */}
-                  <motion.div
-                    className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/5 blur-2xl"
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileHover={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.div>
+                {/* Minimalist Icon wrapper */}
+                <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg border bg-background/50 shadow-sm transition-colors group-hover:border-primary/50 group-hover:bg-primary/5">
+                  <Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
+                </div>
+                
+                <h3 className="mb-3 text-lg font-medium tracking-tight text-foreground transition-colors group-hover:text-primary">
+                  {t(`items.${feature.key}.title`)}
+                </h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {t(`items.${feature.key}.description`)}
+                </p>
               </motion.div>
             )
           })}
