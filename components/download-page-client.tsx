@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button"
 import { getAllDownloadOptions, detectOS, type DownloadInfo } from "@/lib/download-utils"
 import { motion } from "framer-motion"
 import { useSyncExternalStore } from "react"
-import Link from "next/link"
+import { Link } from "@/navigation"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 
 interface DownloadPageClientProps {
   downloadInfo: DownloadInfo | null
@@ -25,6 +26,7 @@ function getServerSnapshot() {
 }
 
 export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
+  const t = useTranslations('download')
   const currentOS = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
   const mounted = currentOS !== 'unknown'
   
@@ -52,7 +54,7 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
             <span>Holix AI</span>
           </Link>
           <Link href="/">
-            <Button variant="ghost">返回首页</Button>
+            <Button variant="ghost">{t('backToHome')}</Button>
           </Link>
         </div>
       </header>
@@ -68,10 +70,10 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
               transition={{ duration: 0.5 }}
             >
               <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-                下载 Holix AI
+                {t('title')}
               </h1>
               <p className="mb-8 text-xl text-muted-foreground">
-                选择适合你操作系统的版本，开始使用 AI 工作台
+                {t('subtitle')}
               </p>
             </motion.div>
           </div>
@@ -88,7 +90,7 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
                 className="mb-12 text-center"
               >
                 <p className="mb-4 text-sm text-muted-foreground">
-                  检测到您的操作系统：<span className="font-semibold text-foreground">{currentOS === 'windows' ? 'Windows' : currentOS === 'mac' || currentOS === 'mac-arm' ? 'macOS' : 'Linux'}</span>
+                  {t('detectedOS')}: <span className="font-semibold text-foreground">{currentOS === 'windows' ? 'Windows' : currentOS === 'mac' || currentOS === 'mac-arm' ? 'macOS' : 'Linux'}</span>
                 </p>
               </motion.div>
             )}
@@ -109,7 +111,7 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
                       <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                         <span className="inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
                           <CheckCircle2 className="h-3 w-3" />
-                          推荐
+                          {t('recommended')}
                         </span>
                       </div>
                     )}
@@ -127,7 +129,7 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
                         <h3 className="text-2xl font-bold">{option.name}</h3>
                         {option.version && (
                           <p className="mt-1 text-xs text-muted-foreground">
-                            版本 {option.version}
+                            {t('version')} {option.version}
                           </p>
                         )}
                       </div>
@@ -136,7 +138,7 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
                         <p>{option.description}</p>
                         <p className="font-mono text-xs">{option.fileFormat}</p>
                         {option.size && (
-                          <p className="text-xs">文件大小: {option.size}</p>
+                          <p className="text-xs">{t('fileSize')}: {option.size}</p>
                         )}
                       </div>
 
@@ -147,7 +149,7 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
                           variant={isRecommended ? "default" : "outline"}
                         >
                           <Download className="h-5 w-5" />
-                          下载 {option.name}
+                          {t('download')} {option.name}
                         </Button>
                       </a>
                     </div>
@@ -168,7 +170,7 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              <h2 className="mb-8 text-2xl font-bold">其他下载方式</h2>
+              <h2 className="mb-8 text-2xl font-bold">{t('otherDownloads')}</h2>
               
               <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <a 
@@ -178,7 +180,7 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
                 >
                   <Button variant="outline" size="lg" className="gap-2">
                     <Github className="h-5 w-5" />
-                    查看所有版本
+                    {t('allReleases')}
                     <ExternalLink className="h-4 w-4" />
                   </Button>
                 </a>
@@ -190,26 +192,26 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
                 >
                   <Button variant="outline" size="lg" className="gap-2">
                     <Github className="h-5 w-5" />
-                    访问 GitHub 仓库
+                    {t('visitGitHub')}
                     <ExternalLink className="h-4 w-4" />
                   </Button>
                 </a>
               </div>
 
               <div className="mt-12 rounded-lg border bg-muted/50 p-6">
-                <h3 className="mb-4 text-lg font-semibold">系统要求</h3>
+                <h3 className="mb-4 text-lg font-semibold">{t('systemRequirements')}</h3>
                 <div className="grid gap-4 text-left sm:grid-cols-3">
                   <div>
                     <p className="mb-1 font-semibold">Windows</p>
-                    <p className="text-sm text-muted-foreground">Windows 10/11 (64位)</p>
+                    <p className="text-sm text-muted-foreground">{t('requirements.windows')}</p>
                   </div>
                   <div>
                     <p className="mb-1 font-semibold">macOS</p>
-                    <p className="text-sm text-muted-foreground">macOS 10.15+ (Catalina 或更高)</p>
+                    <p className="text-sm text-muted-foreground">{t('requirements.macos')}</p>
                   </div>
                   <div>
                     <p className="mb-1 font-semibold">Linux</p>
-                    <p className="text-sm text-muted-foreground">主流发行版 (Glibc 2.28+)</p>
+                    <p className="text-sm text-muted-foreground">{t('requirements.linux')}</p>
                   </div>
                 </div>
               </div>
@@ -221,7 +223,7 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
       {/* Footer */}
       <footer className="border-t px-6 py-8">
         <div className="mx-auto max-w-7xl text-center text-sm text-muted-foreground">
-          <p>© 2026 Holix AI. 开源项目，采用 MIT 协议</p>
+          <p>{t('footerCopyright')}</p>
         </div>
       </footer>
     </div>

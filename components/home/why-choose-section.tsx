@@ -4,33 +4,18 @@ import { CheckCircle2 } from "lucide-react"
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
+import { useTranslations } from "next-intl"
 
 interface Advantage {
-  title: string
-  description: string
+  key: string
 }
 
-const advantages: Advantage[] = [
-  {
-    title: "本地掌控感强",
-    description: "数据、配置、技能都在你的机器中可控，隐私安全有保障"
-  },
-  {
-    title: "扩展性强",
-    description: "通过 Skill 就能注入新能力，而不是等待官方功能排期"
-  },
-  {
-    title: "安全边界清晰",
-    description: "高风险工具审批 + 调用记录，适合真实生产环境"
-  },
-  {
-    title: "模型中立",
-    description: "不绑定单一供应商，方便策略切换和成本优化"
-  },
-  {
-    title: "桌面端稳定体验",
-    description: "更适合长时间工作流，而不是浏览器短会话"
-  }
+const advantageKeys: Advantage[] = [
+  { key: 'localControl' },
+  { key: 'extensible' },
+  { key: 'securityBoundary' },
+  { key: 'modelNeutral' },
+  { key: 'desktopExperience' }
 ]
 
 const itemVariants = {
@@ -46,6 +31,7 @@ const itemVariants = {
 }
 
 export function WhyChooseSection() {
+  const t = useTranslations('whyChoose')
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
@@ -59,17 +45,17 @@ export function WhyChooseSection() {
           className="text-center"
         >
           <h2 className="mb-6 text-3xl font-bold tracking-tight sm:text-4xl">
-            为什么选择 Holix AI
+            {t('title')}
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-lg text-muted-foreground">
-            不只是一个 AI 聊天工具，更是生产力型的 AI 客户端基础设施
+            {t('subtitle')}
           </p>
         </motion.div>
         
         <div ref={ref} className="space-y-6">
-          {advantages.map((advantage, i) => (
+          {advantageKeys.map((advantage, i) => (
             <motion.div
-              key={advantage.title}
+              key={advantage.key}
               custom={i}
               variants={itemVariants}
               initial="hidden"
@@ -85,10 +71,10 @@ export function WhyChooseSection() {
               </motion.div>
               <div className="flex-1">
                 <h3 className="mb-1 font-semibold transition-colors group-hover:text-primary">
-                  {advantage.title}
+                  {t(`items.${advantage.key}.title`)}
                 </h3>
                 <p className="text-muted-foreground">
-                  {advantage.description}
+                  {t(`items.${advantage.key}.description`)}
                 </p>
               </div>
               

@@ -1,13 +1,17 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
-
-const links = [
-  { name: "GitHub", href: "https://github.com/zhaogongchengsi/holix-ai" },
-  { name: "文档", href: "https://github.com/zhaogongchengsi/holix-ai/blob/main/docs/SKILLS.md" },
-  { name: "反馈", href: "https://github.com/zhaogongchengsi/holix-ai/issues" }
-]
+import { useTranslations } from "next-intl"
 
 export function Footer() {
+  const t = useTranslations('footer')
+  
+  const links = [
+    { name: "GitHub", href: "https://github.com/zhaogongchengsi/holix-ai" },
+    { name: t('docs'), href: "https://github.com/zhaogongchengsi/holix-ai/blob/main/docs/SKILLS.md" },
+    { name: t('feedback'), href: "https://github.com/zhaogongchengsi/holix-ai/issues" }
+  ]
   return (
     <footer className="border-t px-6 py-12 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -23,7 +27,7 @@ export function Footer() {
             <span className="text-lg font-bold">Holix AI</span>
           </Link>
           <p className="text-center text-sm text-muted-foreground max-w-md">
-            本地优先的 AI 工作台 · 可扩展 · 可审计
+            {t('tagline')}
           </p>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">

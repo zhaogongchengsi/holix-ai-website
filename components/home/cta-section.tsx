@@ -5,12 +5,15 @@ import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { DownloadButton } from "@/components/download-button"
 import { type DownloadInfo } from "@/lib/download-utils"
+import { useTranslations } from "next-intl"
 
 interface CTASectionProps {
   downloadInfo: DownloadInfo | null
 }
 
 export function CTASection({ downloadInfo }: CTASectionProps) {
+  const t = useTranslations('cta')
+  
   return (
     <section id="quick-start" className="relative overflow-hidden px-6 py-24 lg:px-8">
       {/* Subtle background gradient */}
@@ -24,10 +27,10 @@ export function CTASection({ downloadInfo }: CTASectionProps) {
         className="mx-auto max-w-4xl text-center"
       >
         <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-          立即开始使用
+          {t('title')}
         </h2>
         <p className="mb-10 text-lg text-muted-foreground">
-          开源、免费、可自部署的 AI 工作台
+          {t('subtitle')}
         </p>
         
         <motion.div

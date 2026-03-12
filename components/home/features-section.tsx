@@ -12,44 +12,20 @@ import {
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
+import { useTranslations } from "next-intl"
 
 interface Feature {
   icon: LucideIcon
-  title: string
-  description: string
+  key: string
 }
 
-const features: Feature[] = [
-  {
-    icon: Settings,
-    title: "多模型统一接入",
-    description: "内置 Provider 管理，支持 OpenAI、Anthropic、Google GenAI、Ollama 等多个模型供应商，按会话灵活切换"
-  },
-  {
-    icon: Database,
-    title: "本地优先存储",
-    description: "聊天数据持久化到本地数据库（LibSQL + Drizzle），完整保留上下文，适合长期项目型对话"
-  },
-  {
-    icon: Code2,
-    title: "Skills 技能系统",
-    description: "支持内置与用户自定义 Skills，包含 JavaScript 工具、命令行工具、外部脚本，可自动重载"
-  },
-  {
-    icon: Shield,
-    title: "工具调用审批",
-    description: "高风险工具调用前需审批，支持仅本次允许与始终允许策略，提升安全性与可审计性"
-  },
-  {
-    icon: Laptop,
-    title: "桌面端体验",
-    description: "系统托盘、窗口管理、单实例运行、自动更新（electron-updater）、i18n 多语言支持"
-  },
-  {
-    icon: Sparkles,
-    title: "工程化架构",
-    description: "React + TanStack Router + TypeScript，模块化服务、tRPC，具备完整的单元测试体系"
-  }
+const featureIcons: Feature[] = [
+  { icon: Settings, key: 'multiModel' },
+  { icon: Database, key: 'localFirst' },
+  { icon: Code2, key: 'skills' },
+  { icon: Shield, key: 'approval' },
+  { icon: Laptop, key: 'desktop' },
+  { icon: Sparkles, key: 'architecture' }
 ]
 
 const containerVariants = {
@@ -74,6 +50,7 @@ const itemVariants = {
 }
 
 export function FeaturesSection() {
+  const t = useTranslations('features')
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
@@ -87,10 +64,10 @@ export function FeaturesSection() {
           className="mb-16 text-center"
         >
           <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-            核心功能
+            {t('title')}
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            为生产力打造的 AI 客户端基础设施
+            {t('subtitle')}
           </p>
         </motion.div>
         
@@ -101,11 +78,11 @@ export function FeaturesSection() {
           animate={isInView ? "visible" : "hidden"}
           className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {features.map((feature) => {
+          {featureIcons.map((feature) => {
             const Icon = feature.icon
             return (
               <motion.div
-                key={feature.title}
+                key={feature.key}
                 variants={itemVariants}
                 className="group relative"
               >
@@ -145,10 +122,10 @@ export function FeaturesSection() {
                   </motion.div>
                   
                   <h3 className="mb-2 text-xl font-semibold transition-colors group-hover:text-primary">
-                    {feature.title}
+                    {t(`items.${feature.key}.title`)}
                   </h3>
                   <p className="text-muted-foreground">
-                    {feature.description}
+                    {t(`items.${feature.key}.description`)}
                   </p>
                   
                   {/* Animated corner accent */}

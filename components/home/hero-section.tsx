@@ -7,12 +7,15 @@ import { useState, useEffect } from "react"
 import { DownloadButton } from "@/components/download-button"
 import { type DownloadInfo } from "@/lib/download-utils"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 
 interface HeroSectionProps {
   downloadInfo: DownloadInfo | null
 }
 
 export function HeroSection({ downloadInfo }: HeroSectionProps) {
+  const t = useTranslations('hero')
+  
   // Generate particle positions only on client side to avoid hydration mismatch
   const [particles, setParticles] = useState<Array<{
     left: number
@@ -163,7 +166,7 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mb-4 text-xl text-muted-foreground sm:text-2xl"
           >
-            本地优先 · 可扩展 · 可审计
+            {t('subtitle')}
           </motion.p>
           
           <motion.p
@@ -172,8 +175,7 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-muted-foreground"
           >
-            一个基于 Electron 的跨平台桌面 AI 应用，统一管理多个模型供应商，
-            通过 Skills 机制让 AI 从聊天升级为可执行任务的智能助手
+            {t('description')}
           </motion.p>
           
           <motion.div

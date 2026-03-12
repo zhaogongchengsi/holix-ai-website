@@ -4,7 +4,8 @@ import { Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { detectOS, getDownloadLink, getOSDisplayName, type DownloadInfo } from "@/lib/download-utils"
 import { useSyncExternalStore } from "react"
-import Link from "next/link"
+import { Link } from "@/navigation"
+import { useTranslations } from "next-intl"
 
 interface DownloadButtonProps {
   size?: "default" | "sm" | "lg" | "icon"
@@ -31,6 +32,7 @@ export function DownloadButton({
   showPlatform = true,
   downloadInfo = null 
 }: DownloadButtonProps) {
+  const t = useTranslations('download')
   const os = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
   const downloadLink = getDownloadLink(downloadInfo, os)
@@ -42,7 +44,7 @@ export function DownloadButton({
       <Link href="/download">
         <Button size={size} className={`gap-2 ${className}`}>
           <Download className="h-5 w-5" />
-          下载应用
+          {t('downloadApp')}
         </Button>
       </Link>
     )
@@ -52,7 +54,7 @@ export function DownloadButton({
     <a href={downloadLink} download>
       <Button size={size} className={`gap-2 ${className}`}>
         <Download className="h-5 w-5" />
-        {showPlatform ? `下载 ${osName} 版本` : '下载应用'}
+        {showPlatform ? t('downloadFor', { platform: osName }) : t('downloadApp')}
       </Button>
     </a>
   )
