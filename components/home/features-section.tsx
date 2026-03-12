@@ -87,8 +87,8 @@ export function FeaturesSection() {
                 className="group relative overflow-hidden rounded-2xl border bg-background/50 p-8 transition-colors hover:bg-muted/50"
               >
                 {/* Subtle tech border gradient on hover */}
-                <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary/50" />
-                <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary/20" />
+                <div className="absolute inset-x-0 -top-px h-px bg-linear-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary/50" />
+                <div className="absolute inset-x-0 -bottom-px h-px bg-linear-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary/20" />
                 
                 {/* Minimalist Icon wrapper */}
                 <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg border bg-background/50 shadow-sm transition-colors group-hover:border-primary/50 group-hover:bg-primary/5">
