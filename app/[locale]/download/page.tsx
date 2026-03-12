@@ -1,9 +1,19 @@
 import { getDownloadInfo } from "@/lib/download-utils"
 import { DownloadPageClient } from "@/components/download-page-client"
+import { getTranslations } from "next-intl/server"
 
-export const metadata = {
-  title: '下载 Holix AI | AI 工作台',
-  description: '下载适合你操作系统的 Holix AI 版本，开始使用强大的 AI 工作台',
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'download.metadata' });
+  
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
 }
 
 export default async function DownloadPage() {

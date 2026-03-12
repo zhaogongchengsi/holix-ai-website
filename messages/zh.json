@@ -77,6 +77,10 @@
     "githubButton": "GitHub 仓库"
   },
   "download": {
+    "metadata": {
+      "title": "下载 Holix AI | AI 工作台",
+      "description": "下载适合你操作系统的 Holix AI 版本，开始使用强大的 AI 工作台"
+    },
     "title": "下载 Holix AI",
     "subtitle": "选择适合你操作系统的版本，开始使用 AI 工作台",
     "backToHome": "返回首页",

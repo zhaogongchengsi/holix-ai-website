@@ -77,6 +77,10 @@
     "githubButton": "GitHub Repository"
   },
   "download": {
+    "metadata": {
+      "title": "Download Holix AI | AI Workspace",
+      "description": "Download the Holix AI version suitable for your operating system and start using the powerful AI workspace."
+    },
     "title": "Download Holix AI",
     "subtitle": "Choose the version for your operating system and start using the AI workspace",
     "backToHome": "Back to Home",
