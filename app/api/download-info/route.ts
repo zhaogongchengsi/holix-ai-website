@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server'
-import yaml from 'js-yaml'
 
-interface YmlData {
-  version: string
-  files: Array<{
-    url: string
-    size: number
-  }>
-  path: string
-  releaseDate: string
+interface GitHubAsset {
+  name: string
+  browser_download_url: string
+  size: number
+}
+
+interface GitHubRelease {
+  tag_name: string
+  assets: GitHubAsset[]
 }
 
 interface DownloadInfo {
@@ -28,58 +28,69 @@ interface DownloadInfo {
 
 export async function GET() {
   try {
-    const baseURL = 'https://github.com/zhaogongchengsi/holix-ai/releases/latest/download'
-    
-    // 获取 Windows 版本信息
-    const windowsResponse = await fetch(`${baseURL}/latest.yml`, {
-      cache: 'no-store' // 不缓存，始终获取最新版本
-    })
-    
-    // 获取 macOS 版本信息
-    const macResponse = await fetch(`${baseURL}/latest-mac.yml`, {
-      cache: 'no-store'
-    })
+    // 使用 GitHub API 获取最新 release
+    const response = await fetch(
+      'https://api.github.com/repos/zhaogongchengsi/holix-ai/releases/latest',
+      {
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'holix-ai-website'
+        },
+        cache: 'no-store' // 不缓存，始终获取最新版本
+      }
+    )
 
+    if (!response.ok) {
+      throw new Error(`GitHub API 请求失败: ${response.status}`)
+    }
+
+    const release: GitHubRelease = await response.json()
     const downloadInfo: DownloadInfo = {
       windows: null,
       mac: null
     }
 
-    // 解析 Windows 信息
-    if (windowsResponse.ok) {
-      const windowsText = await windowsResponse.text()
-      const windowsData = yaml.load(windowsText) as Partial<YmlData>
-      
-      if (windowsData.version && windowsData.path) {
-        downloadInfo.windows = {
-          version: windowsData.version,
-          url: `${baseURL}/${windowsData.path}`,
-          fileName: windowsData.path,
-          size: windowsData.files?.[0]?.size || 0
-        }
+    // 查找 Windows 安装包 (.exe)
+    // 优先查找 x64 版本，如果没有则查找任意 .exe 文件
+    const windowsAsset = release.assets.find(asset =>
+      asset.name.includes('x64') && asset.name.endsWith('.exe') && !asset.name.includes('blockmap')
+    ) || release.assets.find(asset =>
+      asset.name.endsWith('.exe') && !asset.name.includes('blockmap')
+    )
+
+    if (windowsAsset) {
+      downloadInfo.windows = {
+        version: release.tag_name.replace(/^v/, ''),
+        url: windowsAsset.browser_download_url,
+        fileName: windowsAsset.name,
+        size: windowsAsset.size
       }
     }
 
-    // 解析 macOS 信息
-    if (macResponse.ok) {
-      const macText = await macResponse.text()
-      const macData = yaml.load(macText) as Partial<YmlData>
-      
-      if (macData.version && macData.path) {
-        downloadInfo.mac = {
-          version: macData.version,
-          url: `${baseURL}/${macData.path}`,
-          fileName: macData.path,
-          size: macData.files?.[0]?.size || 0
-        }
+    // 查找 macOS 安装包 (.dmg)
+    // 优先查找 ARM64 版本（Apple Silicon），如果没有则查找 x64 或通用版本
+    const macAsset = release.assets.find(asset =>
+      asset.name.includes('arm64') && asset.name.endsWith('.dmg') && !asset.name.includes('blockmap')
+    ) || release.assets.find(asset =>
+      asset.name.includes('x64') && asset.name.endsWith('.dmg') && !asset.name.includes('blockmap')
+    ) || release.assets.find(asset =>
+      asset.name.endsWith('.dmg') && !asset.name.includes('blockmap')
+    )
+
+    if (macAsset) {
+      downloadInfo.mac = {
+        version: release.tag_name.replace(/^v/, ''),
+        url: macAsset.browser_download_url,
+        fileName: macAsset.name,
+        size: macAsset.size
       }
     }
 
-    // 如果两个都失败了，返回错误
+    // 如果两个都没找到，返回错误
     if (!downloadInfo.windows && !downloadInfo.mac) {
       return NextResponse.json(
-        { error: '无法获取版本信息' },
-        { status: 500 }
+        { error: '未找到可用的安装包' },
+        { status: 404 }
       )
     }
 
