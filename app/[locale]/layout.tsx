@@ -3,18 +3,27 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n';
 import { ThemeProvider } from "@/components/theme-provider"
+import { Geist_Mono, Inter } from "next/font/google"
 import type { Metadata } from "next"
 import "../globals.css"
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
+
+const fontMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+})
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({
-  params: { locale }
+  params
 }: {
-  params: { locale: string }
+  params: Promise<{ locale: string }>
 }): Promise<Metadata> {
+  const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'hero' });
   
   return {
@@ -67,11 +76,13 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({
   children,
-  params: { locale }
+  params
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
+  
   // 验证语言参数
   if (!locales.includes(locale as Locale)) {
     notFound();
@@ -81,8 +92,18 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider messages={messages}>
-      <ThemeProvider>{children}</ThemeProvider>
-    </NextIntlClientProvider>
+    <html 
+      lang={locale}
+      suppressHydrationWarning
+      className={`antialiased ${fontMono.variable} font-sans ${inter.variable}`}
+    >
+      <body>
+        <ThemeProvider>
+          <NextIntlClientProvider messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
