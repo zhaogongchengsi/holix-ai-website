@@ -65,7 +65,8 @@
 **色彩对比度验证：**
 - Primary 按钮文字对比度：白色文字 `oklch(1 0 0)` 在 `oklch(0.65 0.08 290)` 背景上的对比度约为 4.8:1，符合 WCAG AA 标准
 - 链接文字对比度：`oklch(0.65 0.08 290)` 在白色背景上的对比度约为 4.6:1，符合 WCAG AA 标准
-- 如实际测试中对比度不足，可微调明度值
+- 实施时需使用对比度检查工具（如 Chrome DevTools 的 Contrast Ratio 工具）验证实际效果
+- 如实际测试中对比度不足 4.5:1，需微调明度值直到达标
 
 ### 3. 布局和间距
 
@@ -144,13 +145,13 @@
    - 降低紫色饱和度
    - 调整中性色
 
-2. **HeroSection**
+2. **HeroSection** (`components/home/hero-section.tsx`)
    - 移除粒子系统（particles state 和相关 useEffect）
    - 移除 3 个渐变光球的 motion.div
    - 简化网格背景，降低透明度到 opacity-[0.03]
    - 移除 Logo 的 rotateY 动画，保持静态或简单淡入
    - 增加 section 间距到 py-32 lg:py-40
-   - 注意：hero-section-fixed.tsx 是备用版本，暂不修改，待主版本测试通过后决定是否删除
+   - **关于 hero-section-fixed.tsx**：这是一个备用文件，本次重构不涉及。主版本测试通过后，如果确认不再需要，可以在后续清理中删除
 
 3. **FeaturesSection**
    - 增加卡片间距
@@ -179,7 +180,11 @@
 4. 更新 `WhyChooseSection`
 5. 更新 `CTASection`
 6. 微调 `Navbar` 和 `Footer`
-7. 测试深色模式（验证所有组件在深色模式下的视觉效果）
+7. 测试深色模式
+   - 验证所有文字在深色背景上的对比度符合 WCAG AA 标准
+   - 验证所有组件在深色模式下正确渲染，无视觉错误
+   - 验证边框和阴影在深色模式下可见且不突兀
+   - 测试主题切换的平滑过渡
 8. 测试响应式布局
    - 测试断点：375px (mobile), 768px (tablet), 1024px (desktop), 1440px (large desktop)
    - 验证所有间距和字体大小在不同屏幕下的表现
@@ -190,9 +195,18 @@
 **DownloadInfo 接口（保持不变）：**
 ```typescript
 interface DownloadInfo {
-  version: string
-  downloadUrl: string
-  // 其他字段保持不变
+  windows: {
+    version: string
+    url: string
+    size: number
+    fileName: string
+  } | null
+  mac: {
+    version: string
+    url: string
+    size: number
+    fileName: string
+  } | null
 }
 ```
 
@@ -206,7 +220,8 @@ interface DownloadInfo {
 - 所有更改通过 Git 分支管理，主分支保持稳定
 - 每个组件重构后立即提交，便于单独回滚
 - 如果视觉效果不理想，可以通过 Git revert 快速回滚到上一个稳定版本
-- 建议在 staging 环境充分测试后再部署到生产环境
+- 在本地开发环境充分测试后再部署（使用 `pnpm dev` 本地预览）
+- 部署前建议截图对比，确保视觉效果符合预期
 
 ## 预期效果
 
@@ -218,11 +233,11 @@ interface DownloadInfo {
 
 ## 技术栈
 
-- Next.js 16
-- React 19
-- Tailwind CSS 4
-- Framer Motion（仅用于简单淡入动画）
-- TypeScript
+- Next.js 16.1.6
+- React 19.2.4
+- Tailwind CSS 4.1.18
+- Framer Motion 12.35.2（仅用于简单淡入动画）
+- TypeScript 5.9.3
 
 ## 兼容性
 
@@ -235,8 +250,13 @@ interface DownloadInfo {
 ## 性能基准
 
 - 首屏渲染时间（FCP）：预期减少 15-20%（移除大量动画计算）
+  - 测量工具：Lighthouse、WebPageTest
+  - 当前基准：需在实施前测量
+  - 目标：FCP < 1.5s
 - Lighthouse 性能分数：目标 90+ 分
 - 动画帧率：保持 60fps（简化后的动画更流畅）
+  - 测量工具：Chrome DevTools Performance 面板
+- 包体积：预期减少（移除未使用的动画代码）
 
 ---
 
