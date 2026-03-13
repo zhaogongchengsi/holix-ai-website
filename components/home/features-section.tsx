@@ -1,11 +1,11 @@
 "use client"
 
-import { 
-  Sparkles, 
-  Database, 
-  Settings, 
-  Shield, 
-  Laptop, 
+import {
+  Sparkles,
+  Database,
+  Settings,
+  Shield,
+  Laptop,
   Code2,
   LucideIcon
 } from "lucide-react"
@@ -28,23 +28,13 @@ const featureIcons: Feature[] = [
   { icon: Sparkles, key: 'architecture' }
 ]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-}
-
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5
+      duration: 0.3
     }
   }
 }
@@ -55,13 +45,13 @@ export function FeaturesSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section id="features" className="px-6 py-24 lg:px-8">
+    <section id="features" className="px-8 py-32 lg:px-12 lg:py-40">
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          className="mb-16 text-center"
+          transition={{ duration: 0.3 }}
+          className="mb-20 text-center lg:mb-24"
         >
           <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
             {t('title')}
@@ -70,13 +60,10 @@ export function FeaturesSection() {
             {t('subtitle')}
           </p>
         </motion.div>
-        
-        <motion.div
+
+        <div
           ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12"
         >
           {featureIcons.map((feature) => {
             const Icon = feature.icon
@@ -84,17 +71,15 @@ export function FeaturesSection() {
               <motion.div
                 key={feature.key}
                 variants={itemVariants}
-                className="group relative overflow-hidden rounded-2xl border bg-background/50 p-8 transition-colors hover:bg-muted/50"
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                className="group relative overflow-hidden rounded-xl border border-border/50 bg-card p-8 shadow-sm transition-all duration-300 hover:border-border hover:shadow-md hover:-translate-y-1 lg:p-10"
               >
-                {/* Subtle tech border gradient on hover */}
-                <div className="absolute inset-x-0 -top-px h-px bg-linear-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary/50" />
-                <div className="absolute inset-x-0 -bottom-px h-px bg-linear-to-r from-transparent via-primary/0 to-transparent transition-all duration-500 group-hover:via-primary/20" />
-                
                 {/* Minimalist Icon wrapper */}
                 <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg border bg-background/50 shadow-sm transition-colors group-hover:border-primary/50 group-hover:bg-primary/5">
                   <Icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
                 </div>
-                
+
                 <h3 className="mb-3 text-lg font-medium tracking-tight text-foreground transition-colors group-hover:text-primary">
                   {t(`items.${feature.key}.title`)}
                 </h3>
@@ -104,7 +89,7 @@ export function FeaturesSection() {
               </motion.div>
             )
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
