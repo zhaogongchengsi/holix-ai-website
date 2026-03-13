@@ -16,16 +16,9 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
   const t = useTranslations('hero')
 
   return (
-    <section className="relative overflow-hidden border-b px-8 py-32 lg:px-12 lg:py-40">
+    <section className="relative overflow-hidden border-b bg-background px-8 py-32 lg:px-12 lg:py-40">
       {/* Simplified Background */}
       <div className="absolute inset-0 -z-10">
-        {/* Subtle radial gradient */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(ellipse 80% 50% at 50% 0%, oklch(0.99 0.01 290), oklch(1 0 0))'
-          }}
-        />
         {/* Simplified grid background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)] opacity-[0.03]" />
       </div>
