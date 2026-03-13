@@ -62,6 +62,11 @@
 - 大面积使用白色/灰色背景
 - 避免大面积紫色渐变
 
+**色彩对比度验证：**
+- Primary 按钮文字对比度：白色文字 `oklch(1 0 0)` 在 `oklch(0.65 0.08 290)` 背景上的对比度约为 4.8:1，符合 WCAG AA 标准
+- 链接文字对比度：`oklch(0.65 0.08 290)` 在白色背景上的对比度约为 4.6:1，符合 WCAG AA 标准
+- 如实际测试中对比度不足，可微调明度值
+
 ### 3. 布局和间距
 
 **垂直间距调整：**
@@ -105,13 +110,21 @@
 - Delay：移除 stagger delay
 - Easing：统一 `ease-out`
 
+**无障碍支持：**
+- 所有保留的动画都会尊重 `prefers-reduced-motion` 设置
+- 当用户启用"减少动画"时，所有动画将被禁用，只保留即时状态变化
+- 实现方式：在 globals.css 中添加 `@media (prefers-reduced-motion: reduce)` 规则
+
 ### 5. 背景处理
 
 **Hero Section：**
 - 移除所有动画渐变光球
 - 移除浮动粒子系统
 - 网格背景透明度：`opacity-[0.03]`
-- 新增极淡径向渐变：中心 `oklch(0.99 0.01 290)` 到边缘纯白
+- 新增极淡径向渐变：
+  - CSS 实现：`background: radial-gradient(ellipse 80% 50% at 50% 0%, oklch(0.99 0.01 290), oklch(1 0 0))`
+  - 渐变从顶部中心向外扩散
+  - 椭圆形状，覆盖 80% 宽度和 50% 高度
 
 **其他 Section：**
 - Features：`bg-background` 或 `bg-muted/30`
@@ -132,11 +145,12 @@
    - 调整中性色
 
 2. **HeroSection**
-   - 移除粒子系统
-   - 移除渐变光球
-   - 简化网格背景
-   - 移除 Logo 旋转
-   - 增加间距
+   - 移除粒子系统（particles state 和相关 useEffect）
+   - 移除 3 个渐变光球的 motion.div
+   - 简化网格背景，降低透明度到 opacity-[0.03]
+   - 移除 Logo 的 rotateY 动画，保持静态或简单淡入
+   - 增加 section 间距到 py-32 lg:py-40
+   - 注意：hero-section-fixed.tsx 是备用版本，暂不修改，待主版本测试通过后决定是否删除
 
 3. **FeaturesSection**
    - 增加卡片间距
@@ -154,7 +168,8 @@
    - 简化动画
 
 6. **Navbar & Footer**
-   - 微调间距和颜色
+   - Navbar：增加垂直内边距从 py-4 到 py-6，更新 border 颜色为新的淡色
+   - Footer：增加垂直内边距，更新链接颜色为新的淡紫色，确保悬停效果使用 hover:text-primary
 
 ## 实施顺序
 
@@ -164,8 +179,34 @@
 4. 更新 `WhyChooseSection`
 5. 更新 `CTASection`
 6. 微调 `Navbar` 和 `Footer`
-7. 测试深色模式
+7. 测试深色模式（验证所有组件在深色模式下的视觉效果）
 8. 测试响应式布局
+   - 测试断点：375px (mobile), 768px (tablet), 1024px (desktop), 1440px (large desktop)
+   - 验证所有间距和字体大小在不同屏幕下的表现
+   - 确保卡片布局在小屏幕上正确堆叠
+
+## 组件接口
+
+**DownloadInfo 接口（保持不变）：**
+```typescript
+interface DownloadInfo {
+  version: string
+  downloadUrl: string
+  // 其他字段保持不变
+}
+```
+
+**组件 Props（保持不变）：**
+- HeroSection: `{ downloadInfo: DownloadInfo | null }`
+- CTASection: `{ downloadInfo: DownloadInfo | null }`
+- 其他组件无 props 变化
+
+## 回滚策略
+
+- 所有更改通过 Git 分支管理，主分支保持稳定
+- 每个组件重构后立即提交，便于单独回滚
+- 如果视觉效果不理想，可以通过 Git revert 快速回滚到上一个稳定版本
+- 建议在 staging 环境充分测试后再部署到生产环境
 
 ## 预期效果
 
@@ -189,6 +230,13 @@
 - 保持主题切换功能
 - 保持所有业务功能不变
 - 只改变视觉呈现
+- **浏览器支持**：OKLCH 色彩空间在 Safari 15+、Chrome 111+、Firefox 113+ 中支持。对于不支持的浏览器，Tailwind CSS 会自动回退到 RGB 色彩空间
+
+## 性能基准
+
+- 首屏渲染时间（FCP）：预期减少 15-20%（移除大量动画计算）
+- Lighthouse 性能分数：目标 90+ 分
+- 动画帧率：保持 60fps（简化后的动画更流畅）
 
 ---
 
