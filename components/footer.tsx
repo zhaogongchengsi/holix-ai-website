@@ -13,7 +13,7 @@ export function Footer() {
     { name: t('feedback'), href: "https://github.com/zhaogongchengsi/holix-ai/issues" }
   ]
   return (
-    <footer className="border-t px-6 py-12 lg:px-8">
+    <footer className="border-t px-8 py-16 lg:px-12 lg:py-20">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex flex-col items-center gap-4">
           <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
@@ -41,7 +41,7 @@ export function Footer() {
                 href={link.href} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="text-sm text-muted-foreground transition-colors hover:text-primary"
               >
                 {link.name}
               </a>
