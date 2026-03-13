@@ -3,7 +3,6 @@
 import { Sparkles, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-import { useState, useEffect } from "react"
 import { DownloadButton } from "@/components/download-button"
 import { type DownloadInfo } from "@/lib/download-utils"
 import Image from "next/image"
@@ -15,190 +14,103 @@ interface HeroSectionProps {
 
 export function HeroSection({ downloadInfo }: HeroSectionProps) {
   const t = useTranslations('hero')
-  
-  // Generate particle positions only on client side to avoid hydration mismatch
-  const [particles, setParticles] = useState<Array<{
-    left: number
-    top: number
-    duration: number
-    delay: number
-  }>>([])
-
-  useEffect(() => {
-    const newParticles = Array.from({ length: 20 }, () => ({
-      left: Math.random() * 100,
-      top: Math.random() * 100,
-      duration: Math.random() * 3 + 2,
-      delay: Math.random() * 2,
-    }))
-    setParticles(newParticles)
-  }, [])
 
   return (
-    <section className="relative overflow-hidden border-b px-6 py-24 sm:py-32 lg:px-8">
-      {/* Animated Grid Background */}
+    <section className="relative overflow-hidden border-b px-8 py-32 lg:px-12 lg:py-40">
+      {/* Simplified Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)] opacity-20" />
-      </div>
-      
-      {/* Animated Gradient Orbs */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <motion.div
-          className="absolute -left-40 top-0 h-96 w-96 rounded-full bg-primary/30 blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
+        {/* Subtle radial gradient */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(ellipse 80% 50% at 50% 0%, oklch(0.99 0.01 290), oklch(1 0 0))'
           }}
         />
-        <motion.div
-          className="absolute -right-40 top-20 h-96 w-96 rounded-full bg-secondary/30 blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -50, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute left-1/2 top-40 h-96 w-96 -translate-x-1/2 rounded-full bg-accent/20 blur-3xl"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+        {/* Simplified grid background */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)] opacity-[0.03]" />
       </div>
 
-      {/* Floating Particles */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        {particles.map((particle, i) => (
-          <motion.div
-            key={i}
-            className="absolute h-1 w-1 rounded-full bg-primary/40"
-            style={{
-              left: `${particle.left}%`,
-              top: `${particle.top}%`,
-            }}
-            animate={{
-              y: [-20, -100],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: particle.duration,
-              repeat: Infinity,
-              delay: particle.delay,
-            }}
-          />
-        ))}
-      </div>
-      
       <div className="mx-auto max-w-7xl">
-        <div className="mx-auto max-w-3xl text-center">
-          {/* Animated Logo */}
+        <div className="mx-auto max-w-2xl text-center">
+          {/* Simplified Logo */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.3 }}
             className="mb-8 flex justify-center"
           >
-            <motion.div
-              animate={{ 
-                rotateY: [0, 360],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              className="relative"
-            >
-              <Image 
-                src="/icon_128.png" 
-                alt="Holix AI Logo" 
-                width={96} 
+            <div className="relative">
+              <Image
+                src="/icon_128.png"
+                alt="Holix AI Logo"
+                width={96}
                 height={96}
                 className="h-24 w-24"
                 priority
               />
-              {/* Glow effect */}
-              <div className="absolute inset-0 -z-10 animate-pulse rounded-full bg-primary/20 blur-2xl" />
-            </motion.div>
+            </div>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.3 }}
             className="mb-8 inline-flex items-center rounded-full border bg-background/50 px-4 py-1.5 text-sm backdrop-blur-sm"
           >
-            <Sparkles className="mr-2 h-4 w-4 animate-pulse" />
+            <Sparkles className="mr-2 h-4 w-4" />
             <span>面向开发者的 AI 工作台</span>
           </motion.div>
-          
+
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             className="mb-6 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
           >
             <span className="bg-linear-to-r from-foreground to-foreground/70 bg-clip-text">
               Holix AI
             </span>
           </motion.h1>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
             className="mb-4 text-xl text-muted-foreground sm:text-2xl"
           >
             {t('subtitle')}
           </motion.p>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
             className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-muted-foreground"
           >
             {t('description')}
           </motion.p>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            transition={{ duration: 0.3, delay: 0.25 }}
             className="flex flex-wrap items-center justify-center gap-4"
           >
-            <DownloadButton 
-              size="lg" 
-              className="transition-transform hover:scale-105"
+            <DownloadButton
+              size="lg"
+              className="transition-all duration-300 hover:-translate-y-0.5"
               showPlatform={true}
               downloadInfo={downloadInfo}
             />
-            <a 
-              href="https://github.com/zhaogongchengsi/holix-ai" 
-              target="_blank" 
+            <a
+              href="https://github.com/zhaogongchengsi/holix-ai"
+              target="_blank"
               rel="noopener noreferrer"
             >
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="gap-2 transition-transform hover:scale-105"
+              <Button
+                size="lg"
+                variant="outline"
+                className="gap-2 transition-all duration-300 hover:-translate-y-0.5"
               >
                 <Github className="h-5 w-5" />
                 查看源码
