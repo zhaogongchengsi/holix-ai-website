@@ -714,7 +714,7 @@ Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
 <nav className="container flex h-16 items-center justify-between px-6">
 
 // 改为：
-<nav className="container flex h-18 items-center justify-between px-8 lg:px-12">
+<nav className="container flex h-20 items-center justify-between px-8 lg:px-12">
 ```
 
 - [ ] **Step 2: 更新链接悬停颜色**
@@ -737,7 +737,7 @@ Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
 git add components/navbar.tsx
 git commit -m "style(navbar): increase padding for better breathing room
 
-- Increase height from h-16 to h-18
+- Increase height from h-16 to h-20
 - Increase horizontal padding from px-6 to px-8 lg:px-12
 - Link hover colors automatically use new subtle purple
 
