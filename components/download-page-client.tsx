@@ -115,12 +115,12 @@ export function DownloadPageClient({ downloadInfo }: DownloadPageClientProps) {
                   >
                     {/* Background tech glow effect */}
                     {isRecommended && (
-                      <div className="absolute -inset-0.5 rounded-2xl bg-linear-to-r from-primary to-secondary opacity-50 blur-md transition-all duration-500 group-hover:opacity-100 group-hover:blur-xl" />
+                      <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-primary to-secondary opacity-50 blur-md transition-all duration-500 group-hover:opacity-100 group-hover:blur-xl" />
                     )}
 
                     {/* Main Tech Card */}
-                    <div className={`relative flex h-full flex-col overflow-hidden rounded-2xl border bg-background/60 p-8 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-background/90 ${
-                      isRecommended ? 'border-primary/50 shadow-lg' : 'border-border/50 hover:border-primary/30 hover:shadow-[0_0_30px_-5px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_30px_-5px_rgba(255,255,255,0.05)]'
+                    <div className={`relative flex h-full flex-col overflow-hidden rounded-2xl border bg-card p-8 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+                      isRecommended ? 'border-primary/50 shadow-lg' : 'border-border/50 hover:border-primary/30 hover:shadow-md'
                     }`}>
                       
                       {/* Tech decorative corners */}

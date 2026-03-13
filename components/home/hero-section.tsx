@@ -55,7 +55,7 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="mb-8 inline-flex items-center rounded-full border bg-background/50 px-4 py-1.5 text-sm backdrop-blur-sm"
+            className="mb-8 inline-flex items-center rounded-full border bg-muted/30 px-4 py-1.5 text-sm text-foreground backdrop-blur-sm"
           >
             <Sparkles className="mr-2 h-4 w-4" />
             <span>面向开发者的 AI 工作台</span>
