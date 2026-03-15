@@ -53,7 +53,7 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
                 left: '50%',
                 width: beam.width,
                 height: '45%',
-                background: 'linear-gradient(to top, var(--color-primary), transparent)',
+                background: 'linear-gradient(to top, var(--primary), transparent)',
                 transformOrigin: 'bottom center',
                 rotate: `${beam.rotate}deg`,
               }}
