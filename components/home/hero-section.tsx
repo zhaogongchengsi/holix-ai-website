@@ -81,14 +81,19 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
             className="mb-8 flex justify-center"
           >
             <div className="relative">
-              <Image
-                src="/icon_128.png"
-                alt="Holix AI Logo"
-                width={96}
-                height={96}
-                className="h-24 w-24"
-                priority
-              />
+              {/* Pulsing glow behind logo — separate div so pulse doesn't affect the image */}
+              <div className="absolute inset-0 -z-10 rounded-2xl bg-primary/20 blur-2xl animate-pulse" />
+              {/* Logo container with border and shadow glow */}
+              <div className="relative rounded-2xl bg-primary/10 dark:bg-primary/15 border border-primary/20 dark:border-primary/35 shadow-[0_0_20px_oklch(0.58_0.18_260_/_20%)] dark:shadow-[0_0_30px_oklch(0.58_0.18_260_/_35%)] p-3">
+                <Image
+                  src="/icon_128.png"
+                  alt="Holix AI Logo"
+                  width={96}
+                  height={96}
+                  className="h-24 w-24"
+                  priority
+                />
+              </div>
             </div>
           </motion.div>
 
