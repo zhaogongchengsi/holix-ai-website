@@ -3,10 +3,20 @@
 import { Sparkles, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
+import { useTheme } from "next-themes"
 import { DownloadButton } from "@/components/download-button"
 import { type DownloadInfo } from "@/lib/download-utils"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
+
+const BEAM_CONFIG = [
+  { rotate: -50, width: '1px',   darkOpacity: 0.25, lightOpacity: 0.15, duration: 9,  delay: 0   },
+  { rotate: -25, width: '1.5px', darkOpacity: 0.45, lightOpacity: 0.30, duration: 7,  delay: 0.5 },
+  { rotate:   0, width: '2px',   darkOpacity: 0.60, lightOpacity: 0.40, duration: 6,  delay: 1.0 },
+  { rotate:  25, width: '1.5px', darkOpacity: 0.45, lightOpacity: 0.30, duration: 8,  delay: 1.5 },
+  { rotate:  50, width: '1px',   darkOpacity: 0.25, lightOpacity: 0.15, duration: 10, delay: 2.0 },
+] as const
 
 interface HeroSectionProps {
   downloadInfo: DownloadInfo | null
@@ -14,6 +24,10 @@ interface HeroSectionProps {
 
 export function HeroSection({ downloadInfo }: HeroSectionProps) {
   const t = useTranslations('hero')
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  const isDark = mounted && resolvedTheme === 'dark'
 
   return (
     <section className="relative overflow-hidden border-b bg-background px-8 py-32 lg:px-12 lg:py-40">
@@ -23,6 +37,38 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,oklch(0.58_0.18_260_/_7%)_1px,transparent_1px),linear-gradient(to_bottom,oklch(0.58_0.18_260_/_7%)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,oklch(0.58_0.18_260_/_12%)_1px,transparent_1px),linear-gradient(to_bottom,oklch(0.58_0.18_260_/_12%)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_50%,black_40%,transparent_100%)]" />
         {/* Spotlight — soft primary glow at center */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_45%_at_50%_50%,oklch(0.58_0.18_260_/_6%),transparent)] dark:bg-[radial-gradient(ellipse_55%_45%_at_50%_50%,oklch(0.58_0.18_260_/_18%),transparent)]" />
+      </div>
+
+      {/* Beam Layer — 5 lines radiating upward from section center */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        {BEAM_CONFIG.map((beam, i) => {
+          const opacity = isDark ? beam.darkOpacity : beam.lightOpacity
+          return (
+            <motion.div
+              key={i}
+              style={{
+                position: 'absolute',
+                bottom: '50%',
+                left: '50%',
+                width: beam.width,
+                height: '45%',
+                background: 'linear-gradient(to top, var(--color-primary), transparent)',
+                transformOrigin: 'bottom center',
+                rotate: `${beam.rotate}deg`,
+              }}
+              animate={{
+                opacity: [opacity * 0.7, opacity, opacity * 0.7],
+                scaleY: [0.92, 1, 0.92],
+              }}
+              transition={{
+                duration: beam.duration,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: beam.delay,
+              }}
+            />
+          )
+        })}
       </div>
 
       <div className="mx-auto max-w-7xl">
