@@ -28,6 +28,7 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
   const isDark = mounted && resolvedTheme === 'dark'
+  const subtitleTags = t('subtitle').split(' · ')
 
   return (
     <section className="relative overflow-hidden border-b bg-background px-8 py-32 lg:px-12 lg:py-40">
@@ -101,7 +102,7 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="mb-8 inline-flex items-center rounded-full border bg-muted/30 px-4 py-1.5 text-sm text-foreground backdrop-blur-sm"
+            className="mb-8 inline-flex items-center rounded-full border border-primary/15 dark:border-primary/25 bg-primary/8 dark:bg-primary/10 px-4 py-1.5 text-sm text-primary backdrop-blur-sm"
           >
             <Sparkles className="mr-2 h-4 w-4" />
             <span>面向开发者的 AI 工作台</span>
@@ -113,19 +114,26 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
             transition={{ duration: 0.3, delay: 0.1 }}
             className="mb-6 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
           >
-            <span className="bg-linear-to-r from-foreground to-foreground/70 bg-clip-text">
+            <span className="bg-gradient-to-b from-[oklch(0.15_0.08_258)] to-primary dark:from-white dark:to-[oklch(0.75_0.12_258)] bg-clip-text text-transparent">
               Holix AI
             </span>
           </motion.h1>
 
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.15 }}
-            className="mb-4 text-xl text-muted-foreground sm:text-2xl"
+            className="mb-4 flex flex-wrap items-center justify-center gap-2"
           >
-            {t('subtitle')}
-          </motion.p>
+            {subtitleTags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded border border-primary/15 bg-primary/8 px-2 py-0.5 text-sm text-primary dark:border-primary/20 dark:bg-primary/10"
+              >
+                {tag}
+              </span>
+            ))}
+          </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -142,12 +150,14 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
             transition={{ duration: 0.3, delay: 0.25 }}
             className="flex flex-wrap items-center justify-center gap-4"
           >
-            <DownloadButton
-              size="lg"
-              className="transition-all duration-300 hover:-translate-y-0.5"
-              showPlatform={true}
-              downloadInfo={downloadInfo}
-            />
+            <div className="dark:[&>*]:shadow-[0_0_15px_oklch(0.58_0.18_260_/_35%)]">
+              <DownloadButton
+                size="lg"
+                className="transition-all duration-300 hover:-translate-y-0.5"
+                showPlatform={true}
+                downloadInfo={downloadInfo}
+              />
+            </div>
             <a
               href="https://github.com/zhaogongchengsi/holix-ai"
               target="_blank"
