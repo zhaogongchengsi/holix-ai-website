@@ -17,10 +17,12 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
 
   return (
     <section className="relative overflow-hidden border-b bg-background px-8 py-32 lg:px-12 lg:py-40">
-      {/* Simplified Background */}
-      <div className="absolute inset-0 -z-10">
-        {/* Simplified grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_110%)] opacity-[0.03]" />
+      {/* Background Layer: Grid + Spotlight */}
+      <div className="absolute inset-0 -z-20">
+        {/* Grid — 40px cells, primary-tinted, radial fade, theme-aware opacity */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,oklch(0.58_0.18_260_/_7%)_1px,transparent_1px),linear-gradient(to_bottom,oklch(0.58_0.18_260_/_7%)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,oklch(0.58_0.18_260_/_12%)_1px,transparent_1px),linear-gradient(to_bottom,oklch(0.58_0.18_260_/_12%)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_50%,black_40%,transparent_100%)]" />
+        {/* Spotlight — soft primary glow at center */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_45%_at_50%_50%,oklch(0.58_0.18_260_/_6%),transparent)] dark:bg-[radial-gradient(ellipse_55%_45%_at_50%_50%,oklch(0.58_0.18_260_/_18%),transparent)]" />
       </div>
 
       <div className="mx-auto max-w-7xl">
