@@ -31,7 +31,7 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
   const subtitleTags = t('subtitle').split(' · ')
 
   return (
-    <section className="relative overflow-hidden border-b bg-background px-8 py-32 lg:px-12 lg:py-40">
+    <section className="relative isolate overflow-hidden border-b bg-background px-8 py-32 lg:px-12 lg:py-40">
       {/* Background Layer: Grid + Spotlight */}
       <div className="absolute inset-0 -z-20">
         {/* Grid — 40px cells, primary-tinted, radial fade, theme-aware opacity */}
@@ -53,7 +53,7 @@ export function HeroSection({ downloadInfo }: HeroSectionProps) {
                 left: '50%',
                 width: beam.width,
                 height: '45%',
-                background: 'linear-gradient(to top, var(--primary), transparent)',
+                background: 'linear-gradient(to top, var(--primary), oklch(0.58 0.18 260 / 0))',
                 transformOrigin: 'bottom center',
                 rotate: `${beam.rotate}deg`,
               }}
